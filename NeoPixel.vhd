@@ -15,7 +15,7 @@ end NeoPixel;
 architecture Behav of NeoPixel is
 
 signal s_time, s_time_next : integer range 0 to 1000;
-signal s_color,s_color_next: std_logic;--std_logic_vector(7 downto 0);
+signal s_color,s_color_next: std_logic;--std_logic_vector(23 downto 0);
 subtype state (E0,E1,E2,E3);
 signal PS,NS : state;
 
@@ -28,4 +28,7 @@ begin
    s_time <= '0';
   end if ;
  end if ;
+end process;
+
+comb_proc: process()
 
