@@ -15,10 +15,11 @@ end NeoPixel_controller;
 
 architecture Behav of NeoPixel is
 
+constant reset_time: integer := 25; --cascade transmition time
 signal s_time, s_time_next : integer range 0 to 1000;
 signal s_i, s_i_next : integer range 0 to N;
 signal s_color,s_color_next: std_logic;--std_logic_vector(23 downto 0);
-signal d is array of std_logic_vector(23 downto 0) range 1 to N; --array with the size of an N number of pixels on String
+--signal d is array of std_logic_vector(23 downto 0) range 1 to N; --array with the size of an N number of pixels on String
 signal PS,NS : state;
 signal s_R, s_G, s_B : std_logic_vector(7 downto 0);
 
@@ -40,8 +41,10 @@ begin
   s_time_next <= 0;
  end if;
 
-comb_proc: process(s_color,s_coolor_next) --combinational logic of NeoPixel Color
 
-		s_data_out <= d(i);
-	end loop ; -- identifier
+
+comb_proc: process(s_color,s_coolor_next,s_i,s_i_next) --thisprocess will account for
+ if  then
+ 	
+ end if ;
 
