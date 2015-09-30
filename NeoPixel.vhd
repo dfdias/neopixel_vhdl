@@ -1,10 +1,8 @@
-NeoPixel.vhd
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 entity NeoPixel_controller is
-generic (N : 1)                 /* number of neopixel in string*/
+generic (N : 1)                 --/* number of neopixel in string*/
 port (clk : in std_logic;			-- i don't know the frequency yet, but i'll use a crystal @50MHz
 	  rst : in udo std_lolgic;		-- reset button of the system will be moved to a shell file
 	  SW  : in std_logic_vector(2 downto 0); --for demo and test purposes we are going to use those to change color;
