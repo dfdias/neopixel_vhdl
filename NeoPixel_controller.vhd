@@ -6,9 +6,9 @@ use IEEE.numeric_std.all;
 entity NeoPixel_controller is
 generic (N : 1)                 /* number of neopixel in string*/
 port (clk : in std_logic;			-- i don't know the frequency yet, but i'll use a crystal @50MHz
-	  rst : in udo std_lolgic;		-- reset button of the system will be moved to a shell file
+	  rst : in  std_lolgic;		-- reset button of the system will be moved to a shell file
 	  SW  : in std_logic_vector(2 downto 0); --for demo and test purposes we are going to use those to change color;
-	  RGB : in std_logi_vector(23 downto 0);  -- color datain from serial input(color wheel routine)
+	  --RGB : in std_logi_vector(23 downto 0);  -- color datain from serial input(color wheel routine)
 	  data_out : out std_logic_vector(23 downto 0)); --to be conected on datapin
 
 end NeoPixel_controller;
