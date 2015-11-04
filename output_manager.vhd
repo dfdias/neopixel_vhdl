@@ -5,14 +5,15 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity output_manager is
-port( clk  :  in std_logic;--50Mhz
-	  rst  :  in std_logic;
-	  refresh :  in std_logic;--send refresh signal to the pixels 
-	  s_in   :  in std_logic;
-	  s_out  : out  std_logic; )
+port( clk     :  in std_logic;--50Mhz
+	    rst     :  in std_logic;
+	    refresh :  in std_logic;--send refresh signal to the pixels 
+	    input   :  in std_logic_vector(23 downto 0);
+	    output  : out  std_logic);
 
 end output_manager;
 
+--time constraints still require further conversion
 architecture Behav of output_manager is
 constant T0H : integer := 0.4 us; --zero bit high level time constraint
 constant T0L : integer := 0.85 us; --zero bit low level time constraint
@@ -20,26 +21,30 @@ constant T1H : integer := 0.8 us;  --zero bit high level time constraint
 constant T1L : integer := 0.45 us;  --zero bit high level time constraint
 constant t_reset : integer := 50 us; --reset time constraint
 constant tx_time : integer := T0H + T0L us;
+signal s_idx,s_idx_next : integer range 0 to 23 := 0;
 signal s_t, s_t_next : integer range 0 to tx_time;
-signal s_rst : std_logic;
-
+--signal s_rst : std_logic;
+signal s_in : std_logic;
 
 begin
+  s_idx <= 0;
 
 timing_proc : process (clk,s_rst,rst)
 begin
  if rising_edge(clk) then  
+  s_idx_next <= s_idx +1; 
+  s_in <= input(s_idx_next);
   s_t_next <= s_t + 1;
- elsif s_t = 0 then
-  s_t_next <= 0;
- elsif rst <= '1' then
-  s_t_next <= 0;
- elsif s_rst <= '1' then
+-- elsif s_t = 0 then
+--  s_t_next <= 0;
+ elsif rst = '1' then
   s_t_next <= 0;
 
+ elsif s_rst = '1' then
+  s_t_next <= 0;
 end;
 
-inout_proc : process(s_in,tx_time,)  
+inout_proc : process(s_in,tx_time)  
 begin
  if s_in = '1' then
   s_rst <= '1'
