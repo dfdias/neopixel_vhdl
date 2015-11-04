@@ -1,35 +1,35 @@
---NeoPixel_mapping.vhd
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.all;
 
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all
-
-NeoPixel_mapping is
-generic (K := num_pixels)								--replace num_pixelf by the number of pixel connectedon the string 
-port(clk50		:  in stdlogic;
-	 sw  		:  in std_logic_vector(3 downto 0);
+entity NeoPixel_mapping is
+--generic (K := num_pixels);								--replace num_pixelf by the number of pixel connectedon the string 
+port(clk50		:  in std_logic;
+	 sw  			:  in std_logic_vector(3 downto 0);
 	 pin_out 	: out std_logic);
-end;
+end NeoPixel_mapping;
 
 architecture Behav of NeoPixel_mapping is
-signal s_clk is std_logic;
-signal s_raw_out is std_logic;
-signal s_refresh is std_logic;
+signal s_clk : std_logic;
+signal s_raw_out : std_logic_vector(23 downto 0);
+signal s_refresh : std_logic;
 
 begin
 
-Controller: entity.work.NeoPixel_controller(Behav)
-	generic port(N => K);
-	port map (clk => clk50;
-			  rst => sw(0);
-			  sw  => sw(3 downto 1);
-			  refresh => s_refresh;
-			  data_out =>s_out);
+NeoPixel_controller: entity work.NeoPixel_controller(Behav)
+	--generic port(N => K);
+	port map(
+				clk => clk50,
+				rst => sw(0),
+				sw  => sw(3 downto 1),
+				refresh => s_refresh,
+				data_out =>s_raw_out);
 
-Pixel_decoder: entity.work.output_manager(Behav)
-	port map(clk => clk50;
-			 refresh =>s_refresh;
-			 input =>s_raw_out;
+pixel_decoder: entity work.output_manager(Behav)
+	port map(clk => clk50,
+			 refresh =>s_refresh,
+			 input =>s_raw_out,
+			 rst => '0',
 			 output => pin_out);
 
 end Behav;
