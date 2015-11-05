@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity NeoPixel_controller is
+entity npc is
 generic (N : integer := 1);                 -- number of neopixel in string*/
 port (clk : in std_logic;			-- i don't know the frequency yet, but i'll use a crystal @50MHz
 	   rst : in  std_logic;		-- reset button of the system will be moved to a shell file
@@ -11,9 +11,9 @@ port (clk : in std_logic;			-- i don't know the frequency yet, but i'll use a cr
 	   refresh : out std_logic;
       data_out : out std_logic_vector(23 downto 0)); --to be conected on datapin
 
-end NeoPixel_controller;
+end npc;
 
-architecture Behav of NeoPixel_controller is
+architecture bhv of npc is
 
 constant reset_time: integer := 25; --cascade transmition time in us
 signal s_time, s_time_next : integer range 0 to 1000;
@@ -56,4 +56,4 @@ begin
  end if ;
 end process;
 
-end Behav;
+end bhv;

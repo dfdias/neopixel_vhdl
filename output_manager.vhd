@@ -30,14 +30,12 @@ signal s_in : std_logic;
 begin
   s_idx <= 0;
 
-timing_proc : process (clk,s_rst,rst)
+timing_proc : process (clk,s_rst,rst,s_t_next,s_t)
 begin
  if rising_edge(clk) then  
   s_idx_next <= s_idx +1; 
   s_in <= input(s_idx_next);
   s_t_next <= s_t + 1;
--- elsif s_t = 0 then
---  s_t_next <= 0;
  elsif rst = '1' then
   s_t_next <= 0;
 

@@ -15,19 +15,19 @@ signal s_raw_out : std_logic_vector(23 downto 0);
 signal s_refresh : std_logic;
 
 begin
+s_clk <= clk_50;
 
-controller: entity work.NeoPixel_controller(Behav)
-	generic map(N => 1);
-	port map(
-			 clk => clk_50,
-			 rst => sw(0),
-			 sw  => sw(3 downto 1),
-			 refresh => s_refresh,
-			 data_out =>s_raw_out);
+controller: entity work.controller(behavioral)
+	--generic map(N => 1);
+	port map(clk => s_clk,
+			   rst => sw(0),
+			   sw  => sw(3 downto 1),
+			   refresh => s_refresh,
+			   data_out =>s_raw_out);
 
 pixel_decoder: entity work.output_manager(Behav)
 	port map(
-		     clk => clk_50,
+		    clk => clk_50,
 			 refresh =>s_refresh,
 			 input =>s_raw_out,
 			 rst => '0',
